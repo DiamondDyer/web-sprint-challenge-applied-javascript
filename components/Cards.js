@@ -23,7 +23,7 @@
 
 const cardsContainer = document.querySelector('.cards-container')
 
-function ArticleMaker({title, url, authorName}){
+function CardMaker(obj){
     const cardDiv = document.createElement('div');
     const headline = document.createElement('div');
     const author  = document.createElement('div');
@@ -43,15 +43,15 @@ function ArticleMaker({title, url, authorName}){
     author.appendChild(name);
 
     cardDiv.addEventListener("click", (event)=> {
-        console.log(headline.textContent)
+        console.log(headline.textContent);
     });
 
-headline.textContent = title;
-img.src = url;
-name.textContent = 'By ' + authorName;
+headline.textContent = obj.headline;
+img.src = obj.authorPhoto;
+name.textContent = 'By ' + obj.authorName;
 
-cardsContainer.appendChild(cardDiv)
-return cardDiv
+cardsContainer.appendChild(cardDiv);
+return cardDiv;
 
 
 }
@@ -62,17 +62,60 @@ const { default: Axios } = require("axios")
 
 
 const lambdaURL2 = 'https://lambda-times-backend.herokuapp.com/articles'
-console.log(Axios.get(lambdaURL2)).then(function (value) {
-    const articles = value.data.articles;
-    const headline = value.data.articles.headline
-    const authorName = value.data.articles.authorName
-    const img = value.data.articles.authorPhoto
+
+Axios.get(lambdaURL2).then(function (value) {
+   debugger
+   
+    const bootstrapData = value.data.articles.bootstrap;
+    const jsData = value.data.articles.javascript;
+    const techData = value.data.articles.technology;
+    const nodeData = value.data.articles.node;
+    const jQueryData = value.data.articles.jQuery;
     
+    bootstrapData.forEach(object => {
     
-    articles.forEach(object => {
-      const tab = TabMaker(object)
+       
+        
+      const newCard = CardMaker(object);
+      
       
     });
+
+    jsData .forEach(object => {
+    
+       
+        
+        const newCard = CardMaker(object);
+        
+        
+      });
+
+      techData.forEach(object => {
+    
+       
+        
+        const newCard = CardMaker(object);
+        
+        
+      });
+
+      nodeData.forEach(object => {
+    
+       
+        
+        const newCard = CardMaker(object);
+        
+        
+      });
+
+      jQueryData.forEach(object => {
+    
+       
+        
+        const newCard = CardMaker(object);
+        
+        
+      });
   })
   .catch(function (error) {
     console.log(error)
